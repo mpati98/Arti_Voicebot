@@ -7,6 +7,7 @@ from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from decouple import config
 import openai
+import uvicorn
 
 # Custom function imports
 from functions.database import store_messages, reset_message
@@ -85,3 +86,6 @@ async def post_audio(file: UploadFile = File(...)):
         yield audio_output
 
     return StreamingResponse(iterfile(), media_type="application/octet-stream")
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", port=8000, log_level="info")
